@@ -68,11 +68,20 @@ namespace CBDx000FlowControl
                     int IndOfTerm = reply.IndexOfAny(terms, 1);
                     if (Int32.TryParse(reply[2..IndOfTerm], out SheetInStack))
                         Console.WriteLine($"Sheets in the stacker = {SheetInStack}");
+
+                    if (SheetSent < SheetInStack)
+                    {
+                        Console.WriteLine("Cheques already present in the stack");
+                        lock (CompleteMon)
+                            Monitor.PulseAll(CompleteMon);
+                        return;
+                    }
+
                     SheetSent += PrintMore(SheetsData, SheetInStack, SheetSent);
 
                     if (SheetsData.Length == SheetInStack)
                     {
-                        Console.WriteLine($"{SheetInStack} cheques printed.");
+                        Console.WriteLine($"{SheetInStack} cheques printed");
                         lock (CompleteMon)
                             Monitor.PulseAll(CompleteMon);
                     }

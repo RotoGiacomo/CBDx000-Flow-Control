@@ -8,7 +8,7 @@ class App
     {
 
 
-        string ComName = args.Length == 0 ? "COM9" : args[0];
+        string ComName = args.Length == 0 ? "COM114" : args[0];
         string FileName1 = args.Length < 2 ? "booklet.txt" : args[1];
         string FileName2 = args.Length < 3 ? "head.txt" : args[2];
 
